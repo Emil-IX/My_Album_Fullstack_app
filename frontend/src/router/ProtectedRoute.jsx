@@ -9,6 +9,6 @@ const ProtectedRoute = ({ children }) => {
 }
 
 
-
+//Desde main
 
 export default ProtectedRoute;
