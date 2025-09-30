@@ -7,6 +7,7 @@ import ProtectedRoute from "./router/ProtectedRoute";
 import { Register } from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import PrivateLayout from "./layouts/PrivateLayout";
 
 const App = () => {
   return (
@@ -18,14 +19,15 @@ const App = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route
-            path="/dashboard"
-            element={
+
+          <Route path="/" element={ <PrivateLayout/> } >
+          <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
-            }
-          />
+            } />
+
+          </Route>
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
