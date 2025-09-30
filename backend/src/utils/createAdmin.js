@@ -18,10 +18,10 @@ export const createInitialAdmin = async () =>{
 
         const admin = new User({
             name:"admin_GM 2000",
-            email: "admin@hotmail.com",
+            email: "admin@gmail.com",
             password: hashedPassword,
             role: "admin",
-            age:"08-14-1994"
+            age:"1994-08-14"
 
         })
 

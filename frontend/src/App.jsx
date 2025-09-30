@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import UsersManager   from "./pages/UsersManager";
 import ProtectedRoute from "./router/ProtectedRoute";
 import { Register } from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -24,6 +25,11 @@ const App = () => {
           <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+          <Route path="/settings/users" element={
+              <ProtectedRoute>
+                < UsersManager/>
               </ProtectedRoute>
             } />
 

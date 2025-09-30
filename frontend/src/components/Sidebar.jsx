@@ -37,7 +37,7 @@ export default function Sidebar() {
                 </NavLink>
 
                 <NavLink
-                    to="/setting"
+                    to="/perfil"
                     className={({ isActive }) =>
                         `flex items-center mt-3 gap-3 p-2 rounded cursor-pointer hover:bg-gray-700 ${isActive ? "bg-gray-800" : ""
                         }`
@@ -48,7 +48,7 @@ export default function Sidebar() {
                 </NavLink>
 
                 <NavLink
-                    to="/settings"
+                    to="/settings/users"
                     className={({ isActive }) =>
                         `flex items-center mt-3 gap-3 p-2 rounded cursor-pointer hover:bg-gray-700 ${isActive ? "bg-gray-800" : ""
                         }`

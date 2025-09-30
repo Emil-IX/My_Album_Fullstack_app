@@ -1,61 +1,51 @@
-import React, { createContext, useContext, useState, useEffect, use } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import api, { setAuthToken } from "../api/axios";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [user, setUser] = useState(() => (token ? jwtDecode(token) : null));
+  const [loadingAuth, setLoadingAuth] = useState(true);
 
-    const [ token, setToken ] = useState( localStorage.getItem("token") || null );
-    const [ user, setUser ] = useState( () =>{
-        try {
-            return token ? jwtDecode(token) : null
+  // Inicia el token al montar el provider
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+      setAuthToken(savedToken);
+      setUser(jwtDecode(savedToken));
+    }
+    setLoadingAuth(false);
+  }, []);
 
-        } catch  {
-            return null
-
-        }
-    } );
-
-
-    useEffect(() => {
-
+  useEffect(() => {
     if (token) {
-        setAuthToken(token)
-        setUser(jwtDecode(token))
-        localStorage.setItem("token", token)
-        
+      setAuthToken(token);
+      setUser(jwtDecode(token));
+      localStorage.setItem("token", token);
     } else {
-        setAuthToken(null)
-        setUser(null)
-        localStorage.removeItem("token")
+      setAuthToken(null);
+      setUser(null);
+      localStorage.removeItem("token");
     }
+  }, [token]);
 
-  
-}, [token])
+  const login = async ({ email, password }) => {
+    const res = await api.post("/auth/login", { email, password });
+    const newToken = res.data.token || res.data.accessToken;
+    if (!newToken) throw new Error("No token received");
+    setToken(newToken);
+  };
 
-    const login = async ({email, password}) => {
+  const logout = () => setToken(null);
 
-        const res = await api.post("/auth/login", { email, password })
-        const newToken = res.data.token || res.data.accessToken
-        if (!newToken)  throw new Error("No token received")
-        setToken(newToken)
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout, loadingAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-    }
-
-    const logout = () => {
-        setToken(null)
-    }
-
-    return(
-        <AuthContext.Provider value={{ user, token, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    )
-
-}
-
-
-export const useAuth = () =>  useContext(AuthContext)
-
-
+export const useAuth = () => useContext(AuthContext);
