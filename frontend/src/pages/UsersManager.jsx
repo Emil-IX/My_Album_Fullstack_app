@@ -1,7 +1,8 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
-import { Edit, Trash2 } from "lucide-react"
+import UsersTable from "../components/UsersTable";
+import UserModal from "../components/UserModal"
 
 export default function UsersManager() {
   const { token, loadingAuth } = useAuth();
@@ -9,19 +10,19 @@ export default function UsersManager() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
-  const [appearModal, setAppearModal] = useState(false)
-  const [selectUser, setSelectUser] = useState(null)
+  const [appearModal, setAppearModal] = useState(false);
+  const [selectUser, setSelectUser] = useState(null);
   const [formInformation, setFormInformation] = useState({
-    name: '',
-    role: '',
-    age: '',
-    email: '',
-  })
+    name: "",
+    role: "",
+    age: "",
+    email: "",
+  });
 
+  //  inicial fetch
   useEffect(() => {
     const fetchUsers = async () => {
-      if (loadingAuth) return; // espera a que AuthContext inicialice
+      if (loadingAuth) return;
       setLoading(true);
 
       if (!token) {
@@ -43,200 +44,79 @@ export default function UsersManager() {
     fetchUsers();
   }, [token, loadingAuth]);
 
-
+  // Delete users
   const deleteUser = async (userId) => {
     try {
-      let sure = confirm("Are you sure you want errase this user?")
-      if (sure) {
-        const res = await api.delete(`/users/${userId}`)
-        setData((prev) => prev.filter((u) => u._id !== userId))
+      if (confirm("Are you sure you want to erase this user?")) {
+        await api.delete(`/users/${userId}`);
+        setData((prev) => prev.filter((u) => u._id !== userId));
       }
     } catch (err) {
-      setError(err.response?.data?.message || err.message)
+      setError(err.response?.data?.message || err.message);
     }
-  }
+  };
 
-
+  // openmodal with users
   const openEditModal = (user) => {
-    setSelectUser(user)
+    setSelectUser(user);
     setFormInformation({
       name: user.name,
       role: user.role,
       age: user.age,
       email: user.email,
-    })
-    setAppearModal(true)
-  }
+    });
+    setAppearModal(true);
+  };
 
+  // chaanges management in form
   const onChangeInputs = (e) => {
     setFormInformation({
       ...formInformation,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
+  // Update user
   const updateUser = async (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
     try {
       if (!formInformation.name || !formInformation.role || !formInformation.age) {
-        setError("Please fill all the fields")
-        return
+        setError("Please fill all the fields");
+        return;
       }
-      const res = await api.put(`/users/${selectUser._id}`, formInformation)
+      const res = await api.put(`/users/${selectUser._id}`, formInformation);
       setData((prev) =>
-        prev.map(user => user._id == selectUser._id ? res.data : user)
-      )
-      setAppearModal(false)
+        prev.map((user) => (user._id === selectUser._id ? res.data : user))
+      );
+      setAppearModal(false);
     } catch (err) {
-      setError(err.response?.data?.message || err.message)
+      setError(err.response?.data?.message || err.message);
     }
+  };
 
-  }
-
+  // clear user after 3s
   useEffect(() => {
     if (error) {
-      const timer = setTimeout(() => {
-        setError("");
-      }, 3000);
-
+      const timer = setTimeout(() => setError(""), 3000);
       return () => clearTimeout(timer);
     }
   }, [error]);
 
   if (loading) return <p>Loading users...</p>;
-  // if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
       <h2 className="mb-5">Users Manager</h2>
-
-      <table className="min-w-full border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-md">
-        <thead className="bg-blue-900">
-          <tr>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-white uppercase tracking-wider">Name</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-white uppercase tracking-wider">Role</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-white uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-white uppercase tracking-wider">Birth Date</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-white uppercase tracking-wider">Actions</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200">
-          {data.map(({ _id, name, role, age, email }) => (
-            <tr key={_id} className="hover:bg-blue-100 transition-colors">
-              <td className="px-6 py-4 text-sm text-gray-900">
-                {name}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                {role}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                {email}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">
-                {age.split('T')[0]}</td>
-              <td className="px-6 py-4 text-center flex justify-center gap-3">
-                <button
-                  className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200"
-                  onClick={() => openEditModal({ _id, name, role, age, email })}
-                >
-                  <Edit className="w-5 h-5" />
-                </button>
-
-                <button
-                  className="p-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200"
-                  onClick={() => deleteUser(_id)}
-                >
-                  <Trash2 className="w-5 h-5" />
-                </button>
-
-              </td>
-            </tr>
-
-          ))}
-        </tbody>
-
-      </table>
-      {/*  Modal */}
+      <UsersTable data={data} deleteUser={deleteUser} openEditModal={openEditModal} />
       {appearModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/70  " >
-          <div className=" bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-lg font-bold mb-4 text-blue-800">Edit User</h3>
-
-            <form onSubmit={updateUser} className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                value={formInformation.name}
-                onChange={onChangeInputs}
-                placeholder="Name"
-                className="w-full p-2 border rounded 
-             border-gray-700
-             focus:border-blue-300 
-             focus:ring-2 focus:ring-blue-300 
-             focus:outline-none"
-              />
-              <input
-                type="text"
-                name="role"
-                value={formInformation.role}
-                onChange={onChangeInputs}
-                placeholder="Role"
-                className="w-full p-2 border rounded 
-             border-gray-700
-             focus:border-blue-300 
-             focus:ring-2 focus:ring-blue-300 
-             focus:outline-none"
-              />
-              <input
-                type="date"
-                name="age"
-                value={formInformation.age}
-                onChange={onChangeInputs}
-                className="w-full p-2 border rounded 
-             border-gray-700
-             focus:border-blue-300 
-             focus:ring-2 focus:ring-blue-300 
-             focus:outline-none"
-              />
-              <input
-                type="email"
-                name="email"
-                value={formInformation.email}
-                onChange={onChangeInputs}
-                placeholder="Email"
-                className="w-full p-2 border rounded border-gray-500 text-gray-500"
-                disabled={true}
-              />
-
-              {error && (
-                <p
-                  className="py-1 px-2  text-red-500 bg-red-100 rounded"
-                >
-                  {error}</p>
-              )
-              }
-
-              <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setAppearModal(false)}
-                  className="text-white px-4 py-2 bg-gray-500 rounded hover:bg-gray-700"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="text-white px-4 py-2 bg-blue-400 rounded hover:bg-blue-500"
-                >
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
+        <UserModal
+          formInformation={formInformation}
+          onChangeInputs={onChangeInputs}
+          updateUser={updateUser}
+          closeModal={() => setAppearModal(false)}
+          error={error}
+        />
       )}
-
-
-
     </div>
   );
 }
