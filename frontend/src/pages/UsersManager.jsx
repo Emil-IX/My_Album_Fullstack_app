@@ -79,6 +79,10 @@ export default function UsersManager() {
     e.preventDefault()
 
     try {
+      if (!formInformation.name || !formInformation.role || !formInformation.age) {
+        setError("Please fill all the fields")
+        return
+      }
       const res = await api.put(`/users/${selectUser._id}`, formInformation)
       setData((prev) =>
         prev.map(user => user._id == selectUser._id ? res.data : user)
@@ -90,7 +94,7 @@ export default function UsersManager() {
 
   }
 
-   useEffect(() => {
+  useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
         setError("");
@@ -163,7 +167,11 @@ export default function UsersManager() {
                 value={formInformation.name}
                 onChange={onChangeInputs}
                 placeholder="Name"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded 
+             border-gray-700
+             focus:border-blue-300 
+             focus:ring-2 focus:ring-blue-300 
+             focus:outline-none"
               />
               <input
                 type="text"
@@ -171,14 +179,22 @@ export default function UsersManager() {
                 value={formInformation.role}
                 onChange={onChangeInputs}
                 placeholder="Role"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded 
+             border-gray-700
+             focus:border-blue-300 
+             focus:ring-2 focus:ring-blue-300 
+             focus:outline-none"
               />
               <input
                 type="date"
                 name="age"
                 value={formInformation.age}
                 onChange={onChangeInputs}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded 
+             border-gray-700
+             focus:border-blue-300 
+             focus:ring-2 focus:ring-blue-300 
+             focus:outline-none"
               />
               <input
                 type="email"
@@ -195,8 +211,8 @@ export default function UsersManager() {
                   className="py-1 px-2  text-red-500 bg-red-100 rounded"
                 >
                   {error}</p>
-              )  
-            }
+              )
+              }
 
               <div className="flex justify-end gap-2">
                 <button
