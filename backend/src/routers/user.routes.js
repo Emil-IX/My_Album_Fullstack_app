@@ -99,16 +99,16 @@ router.get('/:id',authMiddleware, authorize('admin','user'),idValidator , valida
  *             properties:
  *               name:
  *                 type: string
- *                 example: Juan Pérez
+ *                 example: Emil IXs
  *               email:
  *                 type: string
- *                 example: juan@test.com
+ *                 example: emilixs@gmail.com
  *               password:
  *                 type: string
- *                 example: 123456
+ *                 example: 1234567
  *               age:
  *                 type: integer
- *                 example: 25
+ *                 example: 1999-01-01
  *               role:
  *                 type: string
  *                 enum: [user, admin]

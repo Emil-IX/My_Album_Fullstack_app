@@ -90,8 +90,18 @@ export default function UsersManager() {
 
   }
 
+   useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   if (loading) return <p>Loading users...</p>;
-  if (error) return <p>Error: {error}</p>;
+  // if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
@@ -142,10 +152,11 @@ export default function UsersManager() {
       </table>
       {/*  Modal */}
       {appearModal && (
-        <div className="">
-          <div className="">
-            <h3>Edit User</h3>
-            <form onSubmit={updateUser}>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70  " >
+          <div className=" bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-lg font-bold mb-4 text-blue-800">Edit User</h3>
+
+            <form onSubmit={updateUser} className="space-y-4">
               <input
                 type="text"
                 name="name"
@@ -175,20 +186,29 @@ export default function UsersManager() {
                 value={formInformation.email}
                 onChange={onChangeInputs}
                 placeholder="Email"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded border-gray-500 text-gray-500"
                 disabled={true}
               />
 
-              <div>
+              {error && (
+                <p
+                  className="py-1 px-2  text-red-500 bg-red-100 rounded"
+                >
+                  {error}</p>
+              )  
+            }
+
+              <div className="flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setAppearModal(false)}
+                  className="text-white px-4 py-2 bg-gray-500 rounded hover:bg-gray-700"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className=""
+                  className="text-white px-4 py-2 bg-blue-400 rounded hover:bg-blue-500"
                 >
                   Update
                 </button>
