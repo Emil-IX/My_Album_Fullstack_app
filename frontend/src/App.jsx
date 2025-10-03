@@ -9,6 +9,7 @@ import { Register } from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PrivateLayout from "./layouts/PrivateLayout";
+import CreateUser from "./pages/CreateUser";
 
 const App = () => {
   return (
@@ -30,6 +31,11 @@ const App = () => {
           <Route path="/settings/users" element={
               <ProtectedRoute>
                 < UsersManager/>
+              </ProtectedRoute>
+            } />
+          <Route path="/settings/users/createUser" element={
+              <ProtectedRoute>
+                < CreateUser/>
               </ProtectedRoute>
             } />
 

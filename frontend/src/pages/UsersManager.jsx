@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,  } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import UsersTable from "../components/UsersTable";
 import UserModal from "../components/UserModal"
+import { useNavigate} from "react-router-dom";
 
 export default function UsersManager() {
   const { token, loadingAuth } = useAuth();
@@ -18,6 +19,8 @@ export default function UsersManager() {
     age: "",
     email: "",
   });
+
+const Navigate = useNavigate()
 
   //  inicial fetch
   useEffect(() => {
@@ -106,7 +109,15 @@ export default function UsersManager() {
 
   return (
     <div>
-      <h2 className="mb-5">Users Manager</h2>
+      <div className="flex justify-between items-center mb-5">
+      <h2 className="text-xl font-bold text-blue-500 ">Users Manager</h2>
+      <button 
+      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600" 
+      type="button"
+      onClick={ () => Navigate("/settings/users/createUser") }
+      >
+        Create user</button>
+      </div>
       <UsersTable data={data} deleteUser={deleteUser} openEditModal={openEditModal} />
       {appearModal && (
         <UserModal
