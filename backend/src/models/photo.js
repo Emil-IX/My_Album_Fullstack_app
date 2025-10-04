@@ -1,26 +1,26 @@
-import mongoose  from "mongoose"
+import mongoose from "mongoose"
 
 const photoSchema = new mongoose.Schema({
 
-    userId:{
-        Types: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        require: true,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "User",                         
+        required: true,
     },
 
     comment: {
         type: String,
-        require: true,
+        required: true,
     },
 
     imageUrl: {
         type: String,
-        require: true,
+        required: true,
     },
 
     publicId: {
         type: String,
-        require: true,
+        required: true,
     },
 
     isPublic: {
@@ -28,8 +28,8 @@ const photoSchema = new mongoose.Schema({
         default: false,
     },
 
-}, {timestamps: true } )
+}, { timestamps: true })
 
 
 
-export default mongoose.model("photo", photoSchema)
+export const Photo = mongoose.model("photo", photoSchema)

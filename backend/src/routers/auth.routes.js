@@ -98,10 +98,10 @@ router.post("/register", createUserValidator, validate, async (req, res) => {
  *             properties:
  *               email:
  *                 type: string
- *                 example: test@test.com
+ *                 example: admin@gmail.com
  *               password:
  *                 type: string
- *                 example: 123456
+ *                 example: Admin123
  *     responses:
  *       200:
  *         description: Login exitoso
