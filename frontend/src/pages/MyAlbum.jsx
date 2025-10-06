@@ -55,25 +55,33 @@ export default function MyAlbum() {
             {photos.length === 0 ? (
                 <p>No tienes fotos aún.</p>
             ) : (
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-5">
                     {photos.map((photo) => (
-                        <div key={photo._id} className="border rounded shadow-md">
-                            <img src={photo.imageUrl} alt={photo.comment} className="w-full h-40 object-cover rounded-t" />
-                            <div className="p-2">
-                                <p className="text-sm">{photo.comment}</p>
-                                <small className="block mb-2">
+                        <div key={photo._id} className=" rounded shadow-md">
+                            
+                               <div className="w-full h-64 flex justify-center items-center bg-gray-100">
+                                <img
+                                    src={photo.imageUrl}
+                                    alt={photo.comment}
+                                    className="max-w-full max-h-full object-contain"
+                                />
+                            </div>
+                            
+                            <div className="py-4 px-3 ">
+                                <p className="text-m mt-1 ">{photo.comment}</p>
+                                <small className="block mt-2">
                                     {photo.isPublic ? "🌍 Public" : "🔒 Private"}
                                 </small>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 mt-2">
                                     <button
                                         onClick={() => toggleVisibility(photo._id)}
-                                        className="bg-yellow-500 text-white px-2 py-1 rounded text-xs"
+                                        className="bg-gray-700 text-white px-2 py-1 rounded text-xs"
                                     >
                                         Change visivility
                                     </button>
                                     <button
                                         onClick={() => deletePhoto(photo._id)}
-                                        className="bg-red-500 text-white px-2 py-1 rounded text-xs"
+                                        className="bg-gray-400 text-white px-2 py-1 rounded text-xs"
                                     >
                                         Delete
                                     </button>
