@@ -61,7 +61,7 @@ export default function MyAlbum() {
                     {photos.map((photo) => (
                         <div key={photo._id} className=" rounded shadow-md">
                             
-                               <div className="w-full h-64 flex justify-center items-center bg-gray-100">
+                               <div className="w-full h-64 flex justify-center items-center bg-white/30">
                                 <img
                                     src={photo.imageUrl}
                                     alt={photo.comment}
@@ -69,7 +69,7 @@ export default function MyAlbum() {
                                 />
                             </div>
                             
-                            <div className="py-4 px-3 ">
+                            <div className="py-4 px-3 bg-white ">
                                 <p className="text-m mt-1 ">{photo.comment}</p>
                                 <small className="block mt-2">
                                     {photo.isPublic ? "🌍 Public" : "🔒 Private"}

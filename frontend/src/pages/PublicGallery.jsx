@@ -22,7 +22,7 @@ export default function PublicGallery() {
             <div className="grid grid-cols-4 gap-5">
                 {photos.map((photo) => (
                     <div key={photo._id} className="rounded shadow-md">
-                        <div className="w-full h-64 flex justify-center items-center bg-gray-100">
+                        <div className="w-full h-64 flex justify-center items-center bg-white/30">
                             <img
                                 src={photo.imageUrl}
                                 alt={photo.comment}
@@ -30,7 +30,7 @@ export default function PublicGallery() {
                             />
 
                         </div>
-                        <div className="p-5">
+                        <div className="p-5 bg-white">
                             <p>{photo.comment}</p>
                             <small className="font-bold">Owner - <span className="text-gray-500 font-semibold">{photo.userId?.name}</span> </small>
                         </div>

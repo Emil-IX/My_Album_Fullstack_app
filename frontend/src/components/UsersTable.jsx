@@ -2,7 +2,7 @@ import { Edit, Trash2 } from "lucide-react";
 
 export default function UsersTable({ data, deleteUser, openEditModal }) {
   return (
-    <table className="min-w-full border border-gray-200 divide-y divide-gray-200 rounded-lg shadow-md">
+    <table className=" bg-white min-w-full  divide-y divide-gray-200 rounded shadow-md">
       <thead className="bg-blue-900">
         <tr>
           <th className="px-6 py-3 text-left text-sm font-semibold text-white">Name</th>
