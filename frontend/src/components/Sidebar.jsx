@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, User, Settings } from "lucide-react";
+import { Home, User, Settings, Image } from "lucide-react";
 import { NavLink } from "react-router-dom"
 
 export default function Sidebar() {
@@ -37,14 +37,25 @@ export default function Sidebar() {
                 </NavLink>
 
                 <NavLink
-                    to="/perfil"
+                    to="/Gallery"
+                    className={({ isActive }) =>
+                        `flex items-center mt-3 gap-3 p-2 rounded cursor-pointer hover:bg-gray-700 ${isActive ? "bg-gray-800" : ""
+                        }`
+                    }
+                >
+                    <Image />
+                    {open && <span>Public Gallery</span>}
+                </NavLink>
+
+                <NavLink
+                    to="/MyAlbum"
                     className={({ isActive }) =>
                         `flex items-center mt-3 gap-3 p-2 rounded cursor-pointer hover:bg-gray-700 ${isActive ? "bg-gray-800" : ""
                         }`
                     }
                 >
                     <User />
-                    {open && <span>Perfil</span>}
+                    {open && <span>My Album</span>}
                 </NavLink>
 
                 <NavLink

@@ -224,7 +224,7 @@ router.get("/my-photos", authMiddleware, async (req, res) => {
 // get all public photos
 router.get("/public", async (req, res) => {
     try {
-        const photos = await Photo.find({ isPublic: true }).populate("userId", "email");
+        const photos = await Photo.find({ isPublic: true }).populate("userId", "name");
         res.json(photos);
 
     } catch (error) {

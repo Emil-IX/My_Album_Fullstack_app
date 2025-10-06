@@ -10,6 +10,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import PrivateLayout from "./layouts/PrivateLayout";
 import CreateUser from "./pages/CreateUser";
+import MyAlbum from "./pages/MyAlbum";
+import UploadPhoto from "./pages/UploadPhoto";
 
 const App = () => {
   return (
@@ -26,6 +28,16 @@ const App = () => {
           <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+          <Route path="/MyAlbum" element={
+              <ProtectedRoute>
+                <MyAlbum />
+              </ProtectedRoute>
+            } />
+          <Route path="/MyAlbum/UploadPhoto" element={
+              <ProtectedRoute>
+                <UploadPhoto />
               </ProtectedRoute>
             } />
           <Route path="/settings/users" element={
