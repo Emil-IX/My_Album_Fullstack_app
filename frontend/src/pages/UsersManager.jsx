@@ -6,7 +6,7 @@ import UserModal from "../components/UserModal"
 import { useNavigate} from "react-router-dom";
 
 export default function UsersManager() {
-  const { token, loadingAuth } = useAuth();
+  const { token, loadingAuth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,6 +106,7 @@ const Navigate = useNavigate()
   }, [error]);
 
   if (loading) return <p>Loading users...</p>;
+  if (user?.role !== "admin") return <p>Access denied, you are not authorized to view this content</p>;
 
   return (
     <div>

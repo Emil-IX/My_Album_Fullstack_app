@@ -1,14 +1,20 @@
+import { useState } from "react";
 import Sidebar from "../components/Sidebar"
 import { Outlet } from "react-router-dom"
 
 export default function PrivateLayout() {
+
+     const [open, setOpen] = useState(true);
+
+      const contentMarginClass = open ? "ml-56" : "ml-20"; 
+
     return (
-        <div className='PrincipalContent' style={{display:"flex"}}>
-            <Sidebar/>
-            <div style={{flex: 1 }}>
+        <div className='flex min-h-screen'>
+            <Sidebar  open={open} setOpen={setOpen} />
+            <div className={`flex-1 ${contentMarginClass} transition-all duration-300`}>
                 
                 {/* Aqui va el header */}
-                <main style={{ padding: "20px"}}>
+                <main className="p-5">
                         <Outlet/>
                 </main>
 

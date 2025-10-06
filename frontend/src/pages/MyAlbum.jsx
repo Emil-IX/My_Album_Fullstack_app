@@ -32,6 +32,8 @@ export default function MyAlbum() {
 
     const deletePhoto = async (id) => {
         try {
+            let sure = confirm("Are you sure to delete this photo ?") 
+            if(!sure) return
             await api.delete(`/photos/${id}`);
             setPhotos(photos.filter((p) => p._id !== id));
         } catch (error) {
@@ -53,7 +55,7 @@ export default function MyAlbum() {
                 Upload Image
             </button>
             {photos.length === 0 ? (
-                <p>No tienes fotos aún.</p>
+                <p>You do not have images or photos to show </p>
             ) : (
                 <div className="grid grid-cols-3 gap-5">
                     {photos.map((photo) => (

@@ -12,6 +12,7 @@ import PrivateLayout from "./layouts/PrivateLayout";
 import CreateUser from "./pages/CreateUser";
 import MyAlbum from "./pages/MyAlbum";
 import UploadPhoto from "./pages/UploadPhoto";
+import PublicGallery from "./pages/PublicGallery";
 
 const App = () => {
   return (
@@ -28,6 +29,11 @@ const App = () => {
           <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+          <Route path="/Gallery" element={
+              <ProtectedRoute>
+                <PublicGallery />
               </ProtectedRoute>
             } />
           <Route path="/MyAlbum" element={
