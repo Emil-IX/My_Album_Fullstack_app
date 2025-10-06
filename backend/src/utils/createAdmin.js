@@ -8,8 +8,9 @@ export const createInitialAdmin = async () =>{
     try {
 
         const adminExists = await User.findOne({role:'admin'})
+        const adminExists2 = await User.findOne({email: 'admin@gmail.com'})
 
-        if (adminExists) {
+        if (adminExists && adminExists2) {
             console.log('Admin already exist')
             return
         }
@@ -17,7 +18,7 @@ export const createInitialAdmin = async () =>{
         const hashedPassword = await bcrypt.hash(process.env.FIRST_ADMIN_PASSWORD, 10)
 
         const admin = new User({
-            name:"admin_GM 2000",
+            name:"admin 2000",
             email: "admin@gmail.com",
             password: hashedPassword,
             role: "admin",
