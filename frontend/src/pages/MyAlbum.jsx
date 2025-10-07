@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios";
+import OpenImage from '../components/OpenImage';
 
 export default function MyAlbum() {
 
     const Navigate = useNavigate()
     const [photos, setPhotos] = useState([])
+    const [selectedImage, setSelectedImage] = useState(null)
 
 
     //load user photo
@@ -41,6 +43,14 @@ export default function MyAlbum() {
         }
     };
 
+    const expandImage = ({imageUrl, comment }) => {
+        setSelectedImage({imageUrl, comment})
+    }
+
+    const closeImage = () => {
+        setSelectedImage(null)
+    }
+
 
 
     return (
@@ -65,7 +75,8 @@ export default function MyAlbum() {
                                 <img
                                     src={photo.imageUrl}
                                     alt={photo.comment}
-                                    className="max-w-full max-h-full object-contain"
+                                    className="max-w-full max-h-full object-contain cursor-pointer"
+                                    onClick={() => expandImage({imageUrl: photo.imageUrl, comment: photo.comment})}
                                 />
                             </div>
                             
@@ -87,12 +98,20 @@ export default function MyAlbum() {
                                     >
                                         Delete
                                     </button>
+    
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
+              {selectedImage && (
+                <OpenImage 
+                imageUrl={selectedImage.imageUrl}
+                comment={selectedImage.comment}
+                closeImage={closeImage} 
+                
+                />)}
         </div>
     )
 }
