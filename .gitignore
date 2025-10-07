@@ -4,7 +4,7 @@ npm-debug.log
 yarn-error.log
 
 # app
-uploads/
+/backend/uploads
 
 
 # Build
