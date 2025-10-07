@@ -59,7 +59,7 @@ export default function MyAlbum() {
             <h2 className="text-2xl font-bold mb-6">My Album</h2>
             <button
                 type='button'
-                className="mb-10 px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="mb-10 px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer"
                 onClick={() => Navigate("/MyAlbum/UploadPhoto")}
             >
                 Upload Image
@@ -88,13 +88,13 @@ export default function MyAlbum() {
                                 <div className="flex gap-2 mt-2">
                                     <button
                                         onClick={() => toggleVisibility(photo._id)}
-                                        className="bg-gray-700 text-white px-2 py-1 rounded text-xs"
+                                        className="bg-gray-700 text-white px-2 py-1 rounded text-xs cursor-pointer hover:bg-gray-900"
                                     >
                                         Change visivility
                                     </button>
                                     <button
                                         onClick={() => deletePhoto(photo._id)}
-                                        className="bg-gray-400 text-white px-2 py-1 rounded text-xs"
+                                        className="bg-gray-400 text-white px-2 py-1 rounded text-xs cursor-pointer hover:bg-red-600"
                                     >
                                         Delete
                                     </button>

@@ -113,7 +113,7 @@ const Navigate = useNavigate()
       <div className="flex justify-between items-center mb-5">
       <h2 className="text-xl font-bold text-gray-900  ">Users Manager</h2>
       <button 
-      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600" 
+      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer" 
       type="button"
       onClick={ () => Navigate("/settings/users/createUser") }
       >
