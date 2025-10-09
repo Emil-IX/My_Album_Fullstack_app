@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from "../api/axios";
 import OpenImage from '../components/OpenImage';
+import { Image } from "lucide-react";
 
 export default function MyAlbum() {
 
@@ -65,7 +66,10 @@ export default function MyAlbum() {
                 Upload Image
             </button>
             {photos.length === 0 ? (
-                <p>You do not have images or photos to show </p>
+                <div className='flex flex-col items-center gap-20 '>
+                    <p className='p-3 bg-white/50 rounded text-gray-500 font-semibold text-center flex item-center w-full'>You don't have images or photos to show </p>
+                    <Image className="opacity-20" size={200} />
+                </div>
             ) : (
                 <div className="grid grid-cols-3 gap-5">
                     {photos.map((photo) => (
