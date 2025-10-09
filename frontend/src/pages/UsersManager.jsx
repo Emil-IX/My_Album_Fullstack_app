@@ -106,7 +106,7 @@ const Navigate = useNavigate()
   }, [error]);
 
   if (loading) return <p>Loading users...</p>;
-  if (user?.role !== "admin") return <p>Access denied, you are not authorized to view this content</p>;
+  if (user?.role !== "admin") return <p className="p-3 bg-white mt-15 rounded text-red-500 font-semibold text-center flex item-center w-full">Access denied, you are not authorized to view this content</p>;
 
   return (
     <div className="mt-20">
