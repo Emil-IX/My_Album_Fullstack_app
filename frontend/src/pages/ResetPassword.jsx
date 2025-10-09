@@ -22,7 +22,7 @@ export default function ResetPassword() {
 
 
         try {
-            if (!password || !configPassword) throw new Error("A field is enty");
+            if (!password || !configPassword) throw new Error("A field is emty");
             if (password !== configPassword) throw new Error("Password are not the same, try again");
             const res = await api.post(`/auth/reset-password/${token}`, { password })
             setMessage(res.data.message || "Password reset successfully!")
@@ -37,13 +37,13 @@ export default function ResetPassword() {
     }
 
     return (
-        <div className="background1 flex  items-center justify-center min-h-screen bg-gray-100">
+      
             <form
                 onSubmit={handleSubmit}
-                className="relative  flex flex-col gap-2 border border-white bg-black p-6 rounded-lg shadow-md w-100"
+                className="relative  flex flex-col gap-2 border border-white bg-white/95 p-6 rounded-lg shadow-md w-100"
             >
-                <h2 className="text-xl  text-white  text-center font-bold mb-4">Reset Password</h2>
-                {error && <p className="text-red-500 mb-2">{error}</p>}
+                <h2 className="text-xl  text-blue-500  text-center font-bold mb-4">Reset Password</h2>
+                {error && <p className="text-red-500 mb-2 bg-red-100 p-1 border rounded">{error}</p>}
                 {message && <p className="text-green-500 mb-2">{message}</p>}
 
                 <div className="relative w-full mb-3">
@@ -52,7 +52,7 @@ export default function ResetPassword() {
                         placeholder='Password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pr-10 px-3 py-2 border rounded bg-white"
+                       className="w-full p-2 mb-3 mb-3 border rounded border-gray-700 focus:border-blue-300 focus:ring-2 focus:ring-blue-300 focus:outline-none"
                     />
                     <button
                         type="button"
@@ -69,12 +69,12 @@ export default function ResetPassword() {
                     placeholder='Confirm Password'
                     value={configPassword}
                     onChange={(e) => setConfigPassword(e.target.value)}
-                    className="w-full mb-3 px-3 py-2 border rounded  bg-white"
+                   className="w-full p-2 mb-3 mb-3 border rounded border-gray-700 focus:border-blue-300 focus:ring-2 focus:ring-blue-300 focus:outline-none"
                 />
 
                 <button
                     disabled={loading}
-                    className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50"
+                    className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50 shadow-sm"
                 >
                     {loading ? "Resetting..." : "Reset Password"}
                 </button>
@@ -82,6 +82,6 @@ export default function ResetPassword() {
 
             </form>
 
-        </div>
+     
     )
 }

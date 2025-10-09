@@ -11,7 +11,7 @@ export default function PrivateLayout() {
     return (
         <div className='flex min-h-screen  bg-gradient-to-b from-blue-300 to-purple-200 w-full '>
             <Sidebar  open={open} setOpen={setOpen} />
-            <div className={`flex-1 ${contentMarginClass} transition-all duration-300`}>
+            <div className={`background2 flex-1 ${contentMarginClass} transition-all duration-300`}>
                 
                 {/* Aqui va el header */}
                 <main className="p-5  min-h-screen ">

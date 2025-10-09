@@ -1,8 +1,39 @@
 @import "tailwindcss";
 
-.background1 {
-background-color: #000000;
-opacity: 0.9;
-background-image:  linear-gradient(#234196 1.1px, transparent 1.1px), linear-gradient(to right, #234196 1.1px, #000000 1.1px);
-background-size: 22px 22px;
-}
+.background1::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
+    opacity: 0.1;
+    z-index: 0; 
+  }
+  
+  .background1 > main { 
+    z-index: 10;
+    position: relative; 
+  }
+
+.background2::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
+    opacity: 0.05;
+    z-index: 0; 
+  }
+  
+  .background2 > main { 
+    z-index: 10;
+    position: relative; 
+  }

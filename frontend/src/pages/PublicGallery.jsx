@@ -28,7 +28,7 @@ export default function PublicGallery() {
 
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4">Public Gallery</h2>
+            <h2 className="text-2xl font-bold mb-10">Public Gallery</h2>
             <div className="grid grid-cols-4 gap-5">
                 {photos.map((photo) => (
                     <div key={photo._id} className="rounded shadow-md">

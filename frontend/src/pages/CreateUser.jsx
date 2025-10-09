@@ -41,8 +41,8 @@ export default function CreateUser() {
     }
 
     return (
-        <div>
-            <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10   ">
+          <div className="flex justify-center items-start min-h-screen pt-45"> 
+            <div className=" max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10 ">
                 <h2 className="text-xl font-bold text-blue-500 ">Create User</h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
@@ -97,7 +97,7 @@ export default function CreateUser() {
                     {error && <p className="py-1 px-2 text-red-500 bg-red-100 rounded">{error}</p>}
                     <button
                         type="submit"
-                        className="text-white px-4 py-2 bg-blue-400 rounded hover:bg-blue-500"
+                        className="text-white px-4 py-2 bg-blue-400 rounded hover:bg-blue-500 shadow-sm"
                         disabled={loading}
                     >
                         Create User
@@ -105,7 +105,7 @@ export default function CreateUser() {
 
                 </form>
             </div>
-
         </div>
+    
     )
 }
