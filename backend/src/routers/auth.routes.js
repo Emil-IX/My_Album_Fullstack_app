@@ -16,7 +16,7 @@ const router = Router();
  * @swagger
  * /auth/register:
  *   post:
- *     summary: Registro de un nuevo usuario
+ *     summary: Registering a new user
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -34,7 +34,7 @@ const router = Router();
  *                 example: Juan Pérez
  *               email:
  *                 type: string
- *                 example: juan@test.com
+ *                 example: juan@gmail.com
  *               password:
  *                 type: string
  *                 example: 123456
@@ -43,11 +43,11 @@ const router = Router();
  *                 example: 25
  *     responses:
  *       201:
- *         description: Usuario registrado correctamente
+ *         description: User successfully registered
  *       400:
- *         description: El email ya existe o datos inválidos
+ *         description: The email already exists or the data is invalid.
  *       500:
- *         description: Error interno del servidor
+ *         description: Internal Server Error
  */
 
 //Register router
@@ -87,7 +87,7 @@ router.post("/register", createUserValidator, validate, async (req, res) => {
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login de usuario
+ *     summary: User login
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -104,9 +104,9 @@ router.post("/register", createUserValidator, validate, async (req, res) => {
  *                 example: Admin123
  *     responses:
  *       200:
- *         description: Login exitoso
+ *         description: Login successful
  *       400:
- *         description: Credenciales inválidas
+ *         description: Invalid credentials
  */
 
 
@@ -142,7 +142,7 @@ router.post("/login", LoginLimiter, loginUserValidator, validate, async (req, re
  * @swagger
  * /auth/forgot-password:
  *   post:
- *     summary: Solicitar restablecimiento de contraseña
+ *     summary: Request password reset
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -155,14 +155,14 @@ router.post("/login", LoginLimiter, loginUserValidator, validate, async (req, re
  *             properties:
  *               email:
  *                 type: string
- *                 example: user@test.com
+ *                 example: user@gmail.com
  *     responses:
  *       200:
- *         description: Se ha enviado un enlace de restablecimiento de contraseña
+ *         description: A password reset link has been sent
  *       400:
- *         description: Email inválido o no registrado
+ *         description: Invalid or unregistered email
  *       500:
- *         description: Error interno del servidor
+ *         description: Internal Server Error
  */
 
 //Forgot-password
@@ -259,7 +259,7 @@ router.post('/forgot-password', LoginLimiter, async (req, res) => {
  * @swagger
  * /auth/forgot-password/{token}:
  *   post:
- *     summary: Restablecer la contraseña con un token válido
+ *     summary: Reset password with a valid token
  *     tags: [Auth]
  *     parameters:
  *       - in: path
@@ -267,7 +267,7 @@ router.post('/forgot-password', LoginLimiter, async (req, res) => {
  *         schema:
  *           type: string
  *         required: true
- *         description: Token de restablecimiento recibido en el correo
+ *         description: Reset token received in the mail
  *     requestBody:
  *       required: true
  *       content:
@@ -282,11 +282,11 @@ router.post('/forgot-password', LoginLimiter, async (req, res) => {
  *                 example: NuevaClave123
  *     responses:
  *       200:
- *         description: Contraseña restablecida exitosamente
+ *         description: Password reset successfully
  *       400:
- *         description: Token inválido o expirado
+ *         description: Invalid or expired token
  *       500:
- *         description: Error interno del servidor
+ *         description: Internal Server Error
  */
 
 router.post('/reset-password/:token', async (req, res) => {

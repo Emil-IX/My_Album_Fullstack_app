@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 
+//This is de photos model that allowe to put de data in mongodb database
 const photoSchema = new mongoose.Schema({
 
     userId: {

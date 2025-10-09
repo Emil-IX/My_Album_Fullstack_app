@@ -5,7 +5,7 @@ dotenv.config();
 
 export const connectDB = async () => {
     try{
-
+        //db connection by monsoose from mongobd
       const { connection } =  await mongoose.connect(process.env.MONGO_URI, {
             maxPoolSize: 10,
             serverSelectionTimeoutMS: 5000,

@@ -1,6 +1,7 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
+//There is de suagger options to have  the documentation of this proyect
 const options = {
   definition: {
     openapi: "3.0.0", 
