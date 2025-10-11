@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Home, User, Settings, Image } from "lucide-react";
 import { NavLink } from "react-router-dom"
 
-export default function Sidebar() {
+export default function Sidebar({ open , setOpen }) {
 
 
-    const [open, setOpen] = useState(true);
+   
 
 
     return (
 
-        <div className="flex">
-            {/* Sidebar */}
-            <div
+      
+        <div
+        /* Sidebar */
                 className={`${open ? "w-55" : "w-20"
-                    } bg-gray-900 text-white h-screen p-4 duration-300`}
+                    }  bg-gray-900 text-white h-screen p-4 duration-300 fixed z-10 top-0 left-0 `}
             >
                 {/* Botón para abrir/cerrar */}
                 <button
@@ -70,6 +70,6 @@ export default function Sidebar() {
                 </NavLink>
 
             </div>
-        </div>
+    
     )
 }

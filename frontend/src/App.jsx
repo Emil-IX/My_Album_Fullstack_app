@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import UsersManager   from "./pages/UsersManager";
+import UsersManager from "./pages/UsersManager";
 import ProtectedRoute from "./router/ProtectedRoute";
 import { Register } from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -12,42 +12,52 @@ import PrivateLayout from "./layouts/PrivateLayout";
 import CreateUser from "./pages/CreateUser";
 import MyAlbum from "./pages/MyAlbum";
 import UploadPhoto from "./pages/UploadPhoto";
+import PublicGallery from "./pages/PublicGallery";
+import PublicLayout from "./layouts/PublicLayout";
 
 const App = () => {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register/>} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/" element={<PublicLayout/>}>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+          </Route>
 
-          <Route path="/" element={ <PrivateLayout/> } >
-          <Route path="/dashboard" element={
+          {/*   private part of app */}
+          <Route path="/" element={<PrivateLayout />} >
+            <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
             } />
-          <Route path="/MyAlbum" element={
+            <Route path="/Gallery" element={
+              <ProtectedRoute>
+                <PublicGallery />
+              </ProtectedRoute>
+            } />
+            <Route path="/MyAlbum" element={
               <ProtectedRoute>
                 <MyAlbum />
               </ProtectedRoute>
             } />
-          <Route path="/MyAlbum/UploadPhoto" element={
+            <Route path="/MyAlbum/UploadPhoto" element={
               <ProtectedRoute>
                 <UploadPhoto />
               </ProtectedRoute>
             } />
-          <Route path="/settings/users" element={
+            <Route path="/settings/users" element={
               <ProtectedRoute>
-                < UsersManager/>
+                < UsersManager />
               </ProtectedRoute>
             } />
-          <Route path="/settings/users/createUser" element={
+            <Route path="/settings/users/createUser" element={
               <ProtectedRoute>
-                < CreateUser/>
+                < CreateUser />
               </ProtectedRoute>
             } />
 

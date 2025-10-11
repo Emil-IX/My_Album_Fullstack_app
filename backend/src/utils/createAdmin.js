@@ -2,7 +2,8 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/users.js";
 
-
+//This module is where the admin is created when the API is activated, 
+//it checks if it exists and if not, it creates it.
 export const createInitialAdmin = async () =>{
 
     try {

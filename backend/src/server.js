@@ -5,25 +5,25 @@ import photoRouter  from "./routers/photo.routes.js"
 import { connectDB } from './config/db.js';
 import { createInitialAdmin } from './utils/createAdmin.js';
 import { corsMiddleware } from './config/cors.js';
-import { securityMiddleware } from './middlewares/security.js';
 import { swaggerUi, swaggerSpec } from "./swagger.js";
 
-
+//This is the server that manages the server from express
 const app = express();
 
 
-app.use(express.json());
-app.disable('x-powered-by');
+app.use(express.json()); // to use json in the app
+app.disable('x-powered-by'); 
 
 
-app.use(corsMiddleware)
+app.use(corsMiddleware)// cors that protect the api
 
 
- connectDB().then( async() => {
+//it create an admint user after start data base
+connectDB().then( async() => {
    await createInitialAdmin()
 })
  
-
+//Routers 
 app.use('/api/auth', authRouter )
 app.use('/api/users' , router)
 app.use('/api/photos', photoRouter )

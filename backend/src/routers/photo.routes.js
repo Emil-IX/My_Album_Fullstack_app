@@ -16,15 +16,15 @@ const upload = multer({ dest: "uploads/" });
  * @swagger
  * /photos/upload:
  *   post:
- *     summary: Sube una nueva imagen al servidor y la almacena en Cloudinary.
+ *     summary: Upload a new image to the server and store it in Cloudinary.
  *     description: 
- *       Este endpoint permite al usuario autenticado subir una imagen. 
- *       La imagen se guarda en Cloudinary y se crea un registro en la base de datos 
- *       con el comentario, el estado de visibilidad (público o privado) y el usuario asociado.
+ *       This endpoint allows the authenticated user to upload an image.
+ *       The image is saved to Cloudinary, and a record is created in the database
+ *       with the comment, visibility status (public or private), and the associated user.
  *     tags:
  *       - Photos
  *     security:
- *       - bearerAuth: []   # Requiere autenticación mediante token JWT
+ *       - bearerAuth: []   #Requires authentication via JWT token
  *     requestBody:
  *       required: true
  *       content:
@@ -37,19 +37,19 @@ const upload = multer({ dest: "uploads/" });
  *               image:
  *                 type: string
  *                 format: binary
- *                 description: Imagen que se desea subir.
+ *                 description: Image you want to upload.
  *               comment:
  *                 type: string
- *                 example: "Foto de perfil actualizada."
- *                 description: Comentario asociado a la imagen.
+ *                 example: "Updated profile picture."
+ *                 description: Comment associated with the image.
  *               isPublic:
  *                 type: string
  *                 enum: ["true", "false"]
  *                 example: "true"
- *                 description: Define si la imagen será pública o privada.
+ *                 description:Define whether the image will be public or private.
  *     responses:
  *       201:
- *         description: Imagen subida y registrada exitosamente.
+ *         description: Image uploaded and registered successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -63,7 +63,7 @@ const upload = multer({ dest: "uploads/" });
  *                   example: "6718ab23e8a72b9c1d56a4e2"
  *                 comment:
  *                   type: string
- *                   example: "Foto de perfil actualizada."
+ *                   example: "Updated profile picture."
  *                 imageUrl:
  *                   type: string
  *                   example: "https://res.cloudinary.com/demo/image/upload/v1234567/user_photos/image.jpg"
@@ -77,33 +77,33 @@ const upload = multer({ dest: "uploads/" });
  *                   type: string
  *                   format: date-time
  *       400:
- *         description: Error en la solicitud o datos inválidos.
+ *         description: Request error or invalid data.
  *       401:
- *         description: No autorizado. El token JWT es inválido o no fue proporcionado.
+ *         description: Unauthorized. The JWT token is invalid or was not provided.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Internal Server Error.
  */
 
 
 //upload image
 router.post("/upload", authMiddleware, upload.single("image"), async (req, res) => {
-  try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "user_photos",
-    });
+    try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: "user_photos",
+        });
 
-    const newPhoto = await Photo.create({
-      userId: req.user.id,
-      comment: req.body.comment,
-      imageUrl: result.secure_url,
-      publicId: result.public_id,
-      isPublic: req.body.isPublic === "true",
-    });
+        const newPhoto = await Photo.create({
+            userId: req.user.id,
+            comment: req.body.comment,
+            imageUrl: result.secure_url,
+            publicId: result.public_id,
+            isPublic: req.body.isPublic === "true",
+        });
 
-    res.status(201).json(newPhoto);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+        res.status(201).json(newPhoto);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 
@@ -112,17 +112,17 @@ router.post("/upload", authMiddleware, upload.single("image"), async (req, res) 
  * @swagger
  * /photos/my-photos:
  *   get:
- *     summary: Obtiene todas las fotos del usuario autenticado.
+ *     summary: Gets all photos of the authenticated user.
  *     description: 
- *       Este endpoint devuelve todas las fotos subidas por el usuario actualmente autenticado.
- *       Requiere un token JWT válido.
+ *       This endpoint returns all photos uploaded by the currently authenticated user.
+ *       Requires a valid JWT token.
  *     tags:
  *       - Photos
  *     security:
- *       - bearerAuth: []   # Requiere autenticación con JWT
+ *       - bearerAuth: []   # Requires authentication with JWT
  *     responses:
  *       200:
- *         description: Lista de fotos del usuario autenticado.
+ *         description: List of photos of the authenticated user.
  *         content:
  *           application/json:
  *             schema:
@@ -152,9 +152,9 @@ router.post("/upload", authMiddleware, upload.single("image"), async (req, res) 
  *                     type: string
  *                     format: date-time
  *       401:
- *         description: No autorizado. El token JWT es inválido o no fue proporcionado.
+ *         description: Unauthorized. The JWT token is invalid or was not provided.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Internal Server Error.
  */
 
 
@@ -173,15 +173,15 @@ router.get("/my-photos", authMiddleware, async (req, res) => {
  * @swagger
  * /photos/public:
  *   get:
- *     summary: Obtiene todas las fotos públicas.
+ *     summary: Get all public photos.
  *     description: 
- *       Este endpoint devuelve todas las fotos que han sido marcadas como públicas por los usuarios.
- *       Cada foto incluye la información básica del usuario que la publicó (solo el correo electrónico).
+ *       This endpoint returns all photos that have been marked as public by users.
+ *        Each photo includes basic information about the user who posted it (email only).
  *     tags:
  *       - Photos
  *     responses:
  *       200:
- *         description: Lista de todas las fotos públicas disponibles.
+ *         description: List of all available public photos.
  *         content:
  *           application/json:
  *             schema:
@@ -200,11 +200,11 @@ router.get("/my-photos", authMiddleware, async (req, res) => {
  *                         example: "6718ab23e8a72b9c1d56a4e2"
  *                       email:
  *                         type: string
- *                         example: "usuario@example.com"
- *                     description: Información del usuario propietario de la foto.
+ *                         example: "user@example.com"
+ *                     description: Information about the user who owns the photo.
  *                   comment:
  *                     type: string
- *                     example: "Atardecer en la playa 🌅"
+ *                     example: "Sunset on the beach 🌅"
  *                   imageUrl:
  *                     type: string
  *                     example: "https://res.cloudinary.com/demo/image/upload/v1234567/user_photos/image.jpg"
@@ -218,7 +218,7 @@ router.get("/my-photos", authMiddleware, async (req, res) => {
  *                     type: string
  *                     format: date-time
  *       500:
- *         description: Error interno del servidor.
+ *         description: Internal Server Error
  */
 
 // get all public photos
@@ -236,26 +236,26 @@ router.get("/public", async (req, res) => {
  * @swagger
  * /photos/{id}/toggle:
  *   patch:
- *     summary: Cambia la visibilidad (público/privado) de una foto del usuario autenticado.
+ *     summary: Changes the visibility (public/private) of a photo of the authenticated user.
  *     description: 
- *       Este endpoint permite alternar el estado de visibilidad (`isPublic`) de una foto específica.
- *       Solo el propietario de la foto puede modificarla.  
- *       Si la foto estaba pública, pasará a privada y viceversa.
+ *      This endpoint allows you to toggle the visibility status (`isPublic`) of a specific photo.
+ *      Only the owner of the photo can edit it.
+ *      If the photo was public, it will become private, and vice versa.
  *     tags:
  *       - Photos
  *     security:
- *       - bearerAuth: []   # Requiere autenticación con JWT
+ *       - bearerAuth: []   # Requires authentication with JWT
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID de la foto que se desea modificar.
+ *         description: ID of the photo you want to modify.
  *         example: "6718ab23e8a72b9c1d56a4e3"
  *     responses:
  *       200:
- *         description: Estado de visibilidad actualizado correctamente.
+ *         description: Visibility status updated successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -279,16 +279,16 @@ router.get("/public", async (req, res) => {
  *                 isPublic:
  *                   type: boolean
  *                   example: false
- *                   description: Nuevo estado de visibilidad tras el cambio.
+ *                   description: New visibility status after the change.
  *                 updatedAt:
  *                   type: string
  *                   format: date-time
  *       401:
- *         description: No autorizado. El token JWT es inválido o no fue proporcionado.
+ *         description: Unauthorized. The JWT token is invalid or was not provided.
  *       404:
- *         description: No se encontró la foto o no pertenece al usuario autenticado.
+ *         description: The photo was not found or does not belong to the authenticated user.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Internal Server Error.
  */
 
 
@@ -314,25 +314,26 @@ router.patch("/:id/toggle", authMiddleware, async (req, res) => {
  * @swagger
  * /photos/{id}:
  *   delete:
- *     summary: Elimina una foto del usuario autenticado.
+ *     summary: Deletes a photo of the authenticated user.
  *     description: 
- *       Este endpoint permite eliminar una foto específica perteneciente al usuario autenticado.  
- *       La foto se elimina tanto de la base de datos como de Cloudinary usando su `publicId`.
+ *       This endpoint allows you to delete a specific photo belonging to the authenticated user.
+ *       The photo is deleted from both the database and Cloudinary using its public ID.
+ *       
  *     tags:
  *       - Photos
  *     security:
- *       - bearerAuth: []   # Requiere autenticación con JWT
+ *       - bearerAuth: []   # Requires authentication with JWT
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID de la foto que se desea eliminar.
+ *         description: ID of the photo you want to delete.
  *         example: "6718ab23e8a72b9c1d56a4e3"
  *     responses:
  *       200:
- *         description: Foto eliminada correctamente.
+ *         description: Photo successfully deleted.
  *         content:
  *           application/json:
  *             schema:
@@ -342,11 +343,11 @@ router.patch("/:id/toggle", authMiddleware, async (req, res) => {
  *                   type: string
  *                   example: "Photo was deleted"
  *       401:
- *         description: No autorizado. El token JWT es inválido o no fue proporcionado.
+ *         description: Unauthorized. The JWT token is invalid or was not provided.
  *       404:
- *         description: No se encontró la foto o no pertenece al usuario autenticado.
+ *         description: The photo was not found or does not belong to the authenticated user.
  *       500:
- *         description: Error interno del servidor.
+ *         description: Internal Server Error.
  */
 
 //Delete photo

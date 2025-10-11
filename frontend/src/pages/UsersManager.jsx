@@ -6,7 +6,7 @@ import UserModal from "../components/UserModal"
 import { useNavigate} from "react-router-dom";
 
 export default function UsersManager() {
-  const { token, loadingAuth } = useAuth();
+  const { token, loadingAuth, user } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,13 +106,14 @@ const Navigate = useNavigate()
   }, [error]);
 
   if (loading) return <p>Loading users...</p>;
+  if (user?.role !== "admin") return <p className="p-3 bg-white mt-15 rounded text-red-500 font-semibold text-center flex item-center w-full">Access denied, you are not authorized to view this content</p>;
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-5">
-      <h2 className="text-xl font-bold text-blue-500 ">Users Manager</h2>
+    <div className="mt-20">
+      <div className="flex justify-between items-center mb-10">
+      <h2 className="text-2xl font-bold text-gray-900  ">Users Manager</h2>
       <button 
-      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600" 
+      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer shadow-sm" 
       type="button"
       onClick={ () => Navigate("/settings/users/createUser") }
       >

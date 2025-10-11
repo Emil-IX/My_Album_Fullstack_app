@@ -14,19 +14,19 @@ const router = Router();
  * @swagger
  * /users:
  *   get:
- *     summary: Obtener todos los usuarios (solo admin)
+ *     summary: Get all users (admin only)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Lista de usuarios
+ *         description: List of users
  *       401:
- *         description: No autorizado (falta token o token inválido)
+ *         description: Unauthorized (missing token or invalid token)
  *       403:
- *         description: Acceso denegado (solo admin)
+ *         description: Access denied (admin only)
  *       500:
- *         description: Error al obtener los usuarios
+ *         description: Error getting users
  */
 
 router.get('/', authMiddleware, authorize('admin') ,async (req, res) => {
@@ -44,7 +44,7 @@ router.get('/', authMiddleware, authorize('admin') ,async (req, res) => {
  * @swagger
  * /users/{id}:
  *   get:
- *     summary: Obtener un usuario por ID (admin o el mismo usuario)
+ *     summary: Get a user by ID (admin or the user itself)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -57,15 +57,15 @@ router.get('/', authMiddleware, authorize('admin') ,async (req, res) => {
  *         description: ID del usuario
  *     responses:
  *       200:
- *         description: Usuario encontrado
+ *         description: User found
  *       401:
- *         description: No autorizado
+ *         description: Unauthorized
  *       403:
- *         description: Acceso denegado
+ *         description: Access denied
  *       404:
- *         description: Usuario no encontrado
+ *         description: User not found
  *       500:
- *         description: Error al obtener usuario
+ *         description: Error getting user
  */
 router.get('/:id',authMiddleware, authorize('admin','user'),idValidator , validate,async (req, res) =>{
   try {
@@ -82,7 +82,7 @@ router.get('/:id',authMiddleware, authorize('admin','user'),idValidator , valida
  * @swagger
  * /users:
  *   post:
- *     summary: Crear un nuevo usuario (solo admin)
+ *     summary: Create a new user (admin only)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -115,13 +115,13 @@ router.get('/:id',authMiddleware, authorize('admin','user'),idValidator , valida
  *                 example: user
  *     responses:
  *       201:
- *         description: Usuario creado
+ *         description: User created
  *       400:
- *         description: Error al crear usuario
+ *         description: Error creating user
  *       401:
- *         description: No autorizado
+ *         description: Unauthorized
  *       403:
- *         description: Acceso denegado
+ *         description: Access denied
  */
 router.post('/' ,authMiddleware, authorize('admin'),createUserValidator, validate ,async (req, res) => {
 try {
@@ -145,7 +145,7 @@ try {
  * @swagger
  * /users/{id}:
  *   put:
- *     summary: Actualizar usuario por ID (solo admin)
+ *     summary: Update user by ID (admin only)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -155,7 +155,7 @@ try {
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del usuario a actualizar
+ *         description: User ID to update
  *     requestBody:
  *       required: true
  *       content:
@@ -174,13 +174,13 @@ try {
  *                 enum: [user, admin]
  *     responses:
  *       200:
- *         description: Usuario actualizado
+ *         description: User updated
  *       400:
- *         description: Error en la actualización
+ *         description: Update failed
  *       401:
- *         description: No autorizado
+ *         description: Unauthorized
  *       403:
- *         description: Acceso denegado
+ *         description: Access denied
  */
 router.put('/:id',authMiddleware,authorize('admin'),idValidator,updateUserValidator, validate, async (req, res) => {
   try {
@@ -199,7 +199,7 @@ router.put('/:id',authMiddleware,authorize('admin'),idValidator,updateUserValida
  * @swagger
  * /users/{id}:
  *   delete:
- *     summary: Eliminar usuario por ID (solo admin)
+ *     summary: Delete user by ID (admin only)
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -209,18 +209,18 @@ router.put('/:id',authMiddleware,authorize('admin'),idValidator,updateUserValida
  *         required: true
  *         schema:
  *           type: string
- *         description: ID del usuario a eliminar
+ *         description: ID of the user to delete
  *     responses:
  *       200:
- *         description: Usuario eliminado
+ *         description: User deleted
  *       401:
- *         description: No autorizado
+ *         description: Unauthorized
  *       403:
- *         description: Acceso denegado
+ *         description: Access denied
  *       404:
- *         description: Usuario no encontrado
+ *         description: User not found
  *       500:
- *         description: Error al eliminar usuario
+ *         description: Error deleting user
  */
 router.delete('/:id', authMiddleware, authorize('admin') ,idValidator, validate, async (req, res) => {
  try {

@@ -37,9 +37,9 @@ export default function UploadPhoto() {
 
 
     return (
-        <div className="p-6">
-            <h2 className="text-xl font-bold mb-4">Upload mage</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-80">
+        <div className="flex justify-center item-srat pt-45">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80 bg-white/90 rounded py-8 px-7 text-center">
+                <h2 className="text-xl font-bold mb-4 text-blue-500">Upload mage</h2>
 
                 <div className="flex flex-col items-start gap-2">
                     <label
@@ -90,12 +90,23 @@ export default function UploadPhoto() {
                     placeholder="Comment"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="border p-2 rounded"
+                    className="border p-2 rounded focus:border-blue-400 
+               focus:ring-2 focus:ring-blue-200 
+               focus:outline-none"
                 />
-                <label>
-                    <input type="checkbox" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} /> Public
-                </label>
-                <button disabled={loading} className="bg-blue-500 text-white py-2 rounded">
+                <div className="flex gap-1">
+                    <label for='public'>Public</label>
+                    <input
+                        id="public"
+                        name="public"
+                        type="checkbox"
+                        checked={isPublic}
+                        onChange={(e) => setIsPublic(e.target.checked)}
+                        className="[accent-color:#428BFF]"
+                    />
+
+                </div>
+                <button disabled={loading} className="bg-blue-500 text-white py-2 rounded shadow-sm">
                     {loading ? "Uploading..." : "Upload"}
                 </button>
             </form>

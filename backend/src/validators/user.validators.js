@@ -1,5 +1,6 @@
 import {body, param} from 'express-validator'
 
+//These are the validations for each of the endpoints in the routes
 export const createUserValidator = [
     body('name')
     .notEmpty()

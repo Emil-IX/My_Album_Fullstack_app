@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-
+//Thi Middleware is the one who identifies the token and decoded it
 export const authMiddleware = (req, res, next) => {
 
     const authHeader =  req.headers['authorization'];

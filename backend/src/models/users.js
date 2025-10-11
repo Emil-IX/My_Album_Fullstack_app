@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//This is de users model that allowe to put de data in mongodb database
 const userSchema = new mongoose.Schema({
     
     name:{ 
