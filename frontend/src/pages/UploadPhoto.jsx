@@ -1,14 +1,17 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
 
 export default function UploadPhoto() {
+    const navigate = useNavigate()
 
     const [image, setImage] = useState(null)
     const [comment, setComment] = useState("")
     const [isPublic, setIsPublic] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [modalConfirm, setModalConfirm] = useState(false)
 
 
     const handleSubmit = async (e) => {
@@ -25,9 +28,10 @@ export default function UploadPhoto() {
             await api.post("/photos/upload", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
-            alert("Image was uploaded")
+            setModalConfirm(true)
             setComment("")
             setImage(null)
+
         } catch (err) {
             alert(err)
         } finally {
@@ -35,10 +39,16 @@ export default function UploadPhoto() {
         }
     }
 
+    const closeModalConfirm = () => {
+        navigate('/MyAlbum')
+        setModalConfirm(false)
+    }
+
+
 
     return (
-        <div className="flex justify-center item-srat pt-45">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80 bg-white/90 rounded py-8 px-7 text-center">
+        <div className="flex justify-center item-srat pt-30">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-110 bg-white/90 rounded py-8 px-7 text-center">
                 <h2 className="text-xl font-bold mb-4 text-blue-500">Upload Image</h2>
 
                 <div className="flex flex-col items-start gap-2">
@@ -110,6 +120,19 @@ export default function UploadPhoto() {
                     {loading ? "Uploading..." : "Upload"}
                 </button>
             </form>
+            {modalConfirm &&
+                <div className='alertUploadedContainer'>
+                    <div className="alertUploaded">
+                        <div className="alertUploaded_texts">
+                            <h3>Message</h3>
+                            <p>Image was uploaded</p>
+                        </div>
+                        <div className="buttons">
+                            <button onClick={closeModalConfirm}> Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }
