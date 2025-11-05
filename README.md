@@ -2,9 +2,7 @@
 
 A full-stack application for sharing photos with the added feature of commenting on them.
 
----
-
-## 🚀 Overview
+## Overview
 
 PhotoShare is a dynamic, user-friendly platform built to allow users to upload their favorite photos and engage with the community by leaving comments. This project is a **full-stack** application, demonstrating a cohesive architecture from the database to the user interface.
 
@@ -13,9 +11,8 @@ PhotoShare is a dynamic, user-friendly platform built to allow users to upload t
 * **Commenting System:** Interact with photos by leaving comments.
 * **Full-Stack Architecture:** Separate front-end, back-end, and database components.
 
----
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 This project leverages modern, robust technologies to deliver a fast and scalable experience:
 
@@ -27,77 +24,93 @@ This project leverages modern, robust technologies to deliver a fast and scalabl
 | **Framework** | **Express** | A fast, unopinionated, minimalist web framework for Node.js. |
 | **Database** | **MongoDB** | A NoSQL document database used for storing photo and comment data. |
 
----
 
-## 💻 Getting Started
+### Login
 
-Follow these steps to get a local copy of the project up and running.
+![page1](frontend/public/login.png)
 
-### Prerequisites
+### Sign Up
 
-You will need the following installed on your machine:
-* [Node.js & npm](https://nodejs.org/en/download/)
-* [MongoDB](https://www.mongodb.com/try/download/community) (either installed locally or using a cloud service like MongoDB Atlas)
+![page2](frontend/public/signUp.png)
 
-### Installation
+### Dashboard
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [YOUR_REPO_URL]
-    cd photoshare-app
-    ```
+![page3](frontend/public/dahboard.png)
 
-2.  **Backend Setup:**
-    ```bash
-    cd backend # or wherever your server directory is
-    npm install
-    ```
-    * Create a `.env` file in the backend directory and add your environment variables (e.g., `MONGO_URI`, `PORT`).
+### Public Gallery
 
-3.  **Frontend Setup:**
-    ```bash
-    cd ../frontend # or wherever your client directory is
-    npm install
-    ```
+![page4](frontend/public/publicGallery.png)
 
-### Running the Application
+### My album emty
 
-1.  **Start the Backend Server:**
-    ```bash
-    # In the backend directory
-    npm start
-    ```
-    The server should start on the configured port (e.g., `http://localhost:5000`).
+![page5](frontend/public/myAlbumEmty.png)
 
-2.  **Start the Frontend Client:**
-    ```bash
-    # In the frontend directory
-    npm start
-    ```
-    The React application should open in your browser, typically at `http://localhost:3000`.
+### Upload Image
 
----
+![page6](frontend/public/uploadImage.png)
 
-## 🤝 Contributing
+### My album 
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+![page7](frontend/public/myAlbum.png)
 
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
+### Users Manager
 
----
+![page8](frontend/public/userManager.png)
 
-## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
 
----
+### Here is the main charater here
 
-## 📧 Contact
+```javascript
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import api, { setAuthToken } from "../api/axios";
 
-Your Name/Team Name - [Your Email]
+const AuthContext = createContext();
 
-Project Link: [YOUR_REPO_URL]
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [user, setUser] = useState(() => (token ? jwtDecode(token) : null));
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+ //Start the token with provider
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+      setAuthToken(savedToken);
+      setUser(jwtDecode(savedToken));
+    }
+    setLoadingAuth(false);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+      setAuthToken(token);
+      setUser(jwtDecode(token));
+      localStorage.setItem("token", token);
+    } else {
+      setAuthToken(null);
+      setUser(null);
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+
+  const login = async ({ email, password }) => {
+    const res = await api.post("/auth/login", { email, password });
+    const newToken = res.data.token || res.data.accessToken;
+    if (!newToken) throw new Error("No token received");
+    setToken(newToken);
+  };
+
+  const logout = () => setToken(null);
+
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout, loadingAuth }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
+

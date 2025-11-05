@@ -39,7 +39,7 @@ export default function UploadPhoto() {
     return (
         <div className="flex justify-center item-srat pt-45">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80 bg-white/90 rounded py-8 px-7 text-center">
-                <h2 className="text-xl font-bold mb-4 text-blue-500">Upload mage</h2>
+                <h2 className="text-xl font-bold mb-4 text-blue-500">Upload Image</h2>
 
                 <div className="flex flex-col items-start gap-2">
                     <label

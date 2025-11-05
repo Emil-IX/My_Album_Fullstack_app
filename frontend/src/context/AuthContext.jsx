@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => (token ? jwtDecode(token) : null));
   const [loadingAuth, setLoadingAuth] = useState(true);
 
-  // Inicia el token al montar el provider
+// Start the token with provider
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) {

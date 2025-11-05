@@ -48,7 +48,7 @@
 
 
 .userControl {
-  width: 150px;
+  width: 200px;
   display: flex;
   flex-direction: row;
   gap: 5px;
