@@ -43,7 +43,7 @@ export default function PublicGallery() {
                         </div>
                         <div className="p-5 bg-white">
                             <p>{photo.comment}</p>
-                            <small className="font-bold">Owner - <span className="text-gray-500 font-semibold">{photo.userId?.name}</span> </small>
+                            <small className="font-bold">Owner - <span className="text-gray-500 font-semibold">{photo.userId?.name ? photo.userId?.name  : 'Unknown, someone once' }</span> </small>
                         </div>
                     </div>
                 ))}
