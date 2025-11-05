@@ -1,9 +1,9 @@
-import { useState, useEffect,  } from "react";
+import { useState, useEffect, } from "react";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import UsersTable from "../components/UsersTable";
 import UserModal from "../components/UserModal"
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function UsersManager() {
   const { token, loadingAuth, user } = useAuth();
@@ -20,7 +20,7 @@ export default function UsersManager() {
     email: "",
   });
 
-const Navigate = useNavigate()
+  const Navigate = useNavigate()
 
   //  inicial fetch
   useEffect(() => {
@@ -50,10 +50,10 @@ const Navigate = useNavigate()
   // Delete users
   const deleteUser = async (userId) => {
     try {
-      if (confirm("Are you sure you want to erase this user?")) {
-        await api.delete(`/users/${userId}`);
-        setData((prev) => prev.filter((u) => u._id !== userId));
-      }
+
+      await api.delete(`/users/${userId}`);
+      setData((prev) => prev.filter((u) => u._id !== userId));
+
     } catch (err) {
       setError(err.response?.data?.message || err.message);
     }
@@ -111,13 +111,13 @@ const Navigate = useNavigate()
   return (
     <div className="mt-2">
       <div className="flex justify-between items-center mb-10">
-      <h2 className="text-2xl font-bold text-gray-900  ">Users Manager</h2>
-      <button 
-      className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer shadow-sm" 
-      type="button"
-      onClick={ () => Navigate("/settings/users/createUser") }
-      >
-        Create user</button>
+        <h2 className="text-2xl font-bold text-gray-900  ">Users Manager</h2>
+        <button
+          className="px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer shadow-sm"
+          type="button"
+          onClick={() => Navigate("/settings/users/createUser")}
+        >
+          Create user</button>
       </div>
       <UsersTable data={data} deleteUser={deleteUser} openEditModal={openEditModal} />
       {appearModal && (

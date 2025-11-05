@@ -10,13 +10,17 @@ function UserControl() {
     const [miniModal, setMiniModal] = useState(false)
 
     const cutText = (text) => {
-        const space = text.indexOf(' ')
+        if(text) {
+               const space = text.indexOf(' ')
 
         if (space !== -1) {
             return text.slice(0, space)
         }
 
         return text
+        }
+
+        return
     }
 
     const openMiniModal = () => {
@@ -29,7 +33,7 @@ function UserControl() {
     return (
         <div className='userControlContainer'>
             <div className='userControl'>
-                <p>Hello, {cutText(user.name, 10)}</p>
+                <p>Hello, {cutText(user?.name, 10)}</p>
                 <UserCircle onClick={() => openMiniModal()} />
             </div>
             {miniModal &&
