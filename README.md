@@ -1,4 +1,4 @@
-# PhotoShare App 📸
+# My Album Fullstack App 
 
 A full-stack application for sharing photos with the added feature of commenting on them.
 
@@ -53,9 +53,17 @@ This project leverages modern, robust technologies to deliver a fast and scalabl
 
 ![page7](frontend/public/myAlbum.png)
 
+### Image view
+
+![page9](frontend/public/exprenImage.png)
+
 ### Users Manager
 
 ![page8](frontend/public/userManager.png)
+
+### Log Out
+
+![page10](frontend/public/logOut.png)
 
 
 
