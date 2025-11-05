@@ -109,7 +109,7 @@ const Navigate = useNavigate()
   if (user?.role !== "admin") return <p className="p-3 bg-white mt-15 rounded text-red-500 font-semibold text-center flex item-center w-full">Access denied, you are not authorized to view this content</p>;
 
   return (
-    <div className="mt-20">
+    <div className="mt-2">
       <div className="flex justify-between items-center mb-10">
       <h2 className="text-2xl font-bold text-gray-900  ">Users Manager</h2>
       <button 

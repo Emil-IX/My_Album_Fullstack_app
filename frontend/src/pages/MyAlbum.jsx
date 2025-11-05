@@ -57,7 +57,7 @@ export default function MyAlbum() {
     return (
 
         <div className="p-6">
-            <h2 className="text-2xl font-bold mb-10">My Album</h2>
+            <h2 className="text-2xl font-bold mb-5">My Album</h2>
             <button
                 type='button'
                 className="mb-10 px-5 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer shadow-sm"

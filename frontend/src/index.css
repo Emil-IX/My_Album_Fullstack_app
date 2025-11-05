@@ -1,39 +1,90 @@
 @import "tailwindcss";
 
 .background1::before {
-    content: "";
+  content: "";
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-    background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
-    opacity: 0.1;
-    z-index: 0; 
-  }
-  
-  .background1 > main { 
-    z-index: 10;
-    position: relative; 
-  }
+  background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.background1>main {
+  z-index: 10;
+  position: relative;
+}
 
 .background2::before {
-    content: "";
+  content: "";
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-    background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
-    opacity: 0.05;
-    z-index: 0; 
-  }
-  
-  .background2 > main { 
-    z-index: 10;
-    position: relative; 
-  }
+  background-image: url(./assets/summer-seamless-pattern-with-navy-blue-tropical-leaves-on-stripe-background-for-fashion-fabric-textile-apparel-and-all-print-vector.jpg);
+  opacity: 0.05;
+  z-index: 0;
+}
+
+.background2>main {
+  z-index: 10;
+  position: relative;
+}
+
+.userControlContainer {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  bottom: 15px;
+
+}
+
+
+.userControl {
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: center;
+  margin: 1em 0.5em;
+  padding: 5px 10px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  color: rgba(2, 32, 76, 0.996);
+}
+
+.userControl p {
+  font-weight: 500;
+}
+
+.userControl :nth-child(2) {
+  cursor: pointer;
+}
+
+.miniModalClose {
+  position: fixed;
+  bottom: 630px;
+  width: 150px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: center;
+  margin: 1em 0.5em;
+  padding: 1px 10px;
+  background-color: rgb(9, 2, 2);
+  border-radius: 3px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.miniModalClose:hover {
+  background-color: rgb(195, 16, 16);
+}
