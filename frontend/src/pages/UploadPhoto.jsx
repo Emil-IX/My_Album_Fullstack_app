@@ -9,6 +9,7 @@ export default function UploadPhoto() {
 
     const [image, setImage] = useState(null)
     const [comment, setComment] = useState("")
+    const [title, setTitle] = useState("")
     const [isPublic, setIsPublic] = useState(false)
     const [loading, setLoading] = useState(false)
     const [modalConfirm, setModalConfirm] = useState(false)
@@ -16,10 +17,11 @@ export default function UploadPhoto() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!image) return alert("Inser a image or photo")
+        if (!image || !comment || !title) return alert("Must comple all fields")
 
         const formData = new FormData()
         formData.append("image", image)
+        formData.append("title", title)
         formData.append("comment", comment)
         formData.append("isPublic", isPublic)
 
@@ -29,6 +31,7 @@ export default function UploadPhoto() {
                 headers: { "Content-Type": "multipart/form-data" },
             })
             setModalConfirm(true)
+            setTitle("")
             setComment("")
             setImage(null)
 
@@ -97,9 +100,26 @@ export default function UploadPhoto() {
 
                 <input
                     type="text"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 60) {
+                            setTitle(e.target.value);
+                        }
+                    }}
+                    className="border p-2 rounded focus:border-blue-400 
+               focus:ring-2 focus:ring-blue-200 
+               focus:outline-none"
+                />
+                <input
+                    type="text"
                     placeholder="Comment"
                     value={comment}
-                    onChange={(e) => setComment(e.target.value)}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 190) {
+                            setComment(e.target.value);
+                        }
+                    }}
                     className="border p-2 rounded focus:border-blue-400 
                focus:ring-2 focus:ring-blue-200 
                focus:outline-none"

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import OpenImage from "../components/OpenImage";
+import { cutText } from "../utils/cutText";
 
 export default function PublicGallery() {
     const [photos, setPhotos] = useState([]);
@@ -26,6 +27,7 @@ export default function PublicGallery() {
         setSelectedImage(null)
     }
 
+
     return (
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-10">Public Gallery</h2>
@@ -42,8 +44,9 @@ export default function PublicGallery() {
 
                         </div>
                         <div className="p-5 bg-white">
-                            <p>{photo.comment}</p>
-                            <small className="font-bold">Owner - <span className="text-gray-500 font-semibold">{photo.userId?.name ? photo.userId?.name  : 'Unknown, someone once' }</span> </small>
+                            <p className="font-bold mb-1 font-sans">{cutText(photo?.title, 70)}</p>
+                            <p className="mb-1" >{cutText(photo.comment, 200)}</p>
+                            <small className="font-bold">Owner - <span className="text-gray-500 font-semibold">{photo.author ? cutText( photo?.author, 70)  : 'Unknown, someone once' }</span> </small>
                         </div>
                     </div>
                 ))}

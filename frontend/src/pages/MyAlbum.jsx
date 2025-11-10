@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom'
 import api from "../api/axios";
 import OpenImage from '../components/OpenImage';
 import { Image } from "lucide-react";
+import { cutText } from '../utils/cutText';
 
 export default function MyAlbum() {
 
     const Navigate = useNavigate()
     const [photos, setPhotos] = useState([])
     const [selectedImage, setSelectedImage] = useState(null)
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false)
+    const [idSelected, setidSelected] = useState(null)
 
 
     //load user photo
@@ -35,8 +38,6 @@ export default function MyAlbum() {
 
     const deletePhoto = async (id) => {
         try {
-            let sure = confirm("Are you sure to delete this photo ?") 
-            if(!sure) return
             await api.delete(`/photos/${id}`);
             setPhotos(photos.filter((p) => p._id !== id));
         } catch (error) {
@@ -44,12 +45,23 @@ export default function MyAlbum() {
         }
     };
 
-    const expandImage = ({imageUrl, comment }) => {
-        setSelectedImage({imageUrl, comment})
+    const expandImage = ({ imageUrl, comment }) => {
+        setSelectedImage({ imageUrl, comment })
     }
 
     const closeImage = () => {
         setSelectedImage(null)
+    }
+
+    const openModalSentId = (id) => {
+        setModalDeleteOpen(true)
+        setidSelected(id)
+    }
+
+
+    const eliminateItem = () => {
+        deletePhoto(idSelected)
+        setModalDeleteOpen(false)
     }
 
 
@@ -74,18 +86,19 @@ export default function MyAlbum() {
                 <div className="grid grid-cols-3 gap-5">
                     {photos.map((photo) => (
                         <div key={photo._id} className=" rounded shadow-md">
-                            
-                               <div className="w-full h-64 flex justify-center items-center bg-white/30">
+
+                            <div className="w-full h-64 flex justify-center items-center bg-white/30">
                                 <img
                                     src={photo.imageUrl}
                                     alt={photo.comment}
                                     className="max-w-full max-h-full object-contain cursor-pointer"
-                                    onClick={() => expandImage({imageUrl: photo.imageUrl, comment: photo.comment})}
+                                    onClick={() => expandImage({ imageUrl: photo.imageUrl, comment: photo.comment })}
                                 />
                             </div>
-                            
+
                             <div className="py-4 px-3 bg-white ">
-                                <p className="text-m mt-1 ">{photo.comment}</p>
+                                <p className="text-m mt-1 mb-1 font-medium">{cutText(photo?.title, 70)}</p>
+                                <p className="text-m mt-1 ">{cutText(photo?.comment, 200)}</p>
                                 <small className="block mt-2">
                                     {photo.isPublic ? "🌍 Public" : "🔒 Private"}
                                 </small>
@@ -97,25 +110,51 @@ export default function MyAlbum() {
                                         Change visivility
                                     </button>
                                     <button
-                                        onClick={() => deletePhoto(photo._id)}
+                                        onClick={() => openModalSentId(photo._id)}
                                         className="bg-gray-400 text-white px-2 py-1 rounded text-xs cursor-pointer hover:bg-red-600"
                                     >
                                         Delete
                                     </button>
-    
+
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
-              {selectedImage && (
-                <OpenImage 
-                imageUrl={selectedImage.imageUrl}
-                comment={selectedImage.comment}
-                closeImage={closeImage} 
-                
+            {selectedImage && (
+                <OpenImage
+                    imageUrl={selectedImage.imageUrl}
+                    comment={selectedImage.comment}
+                    closeImage={closeImage}
+
                 />)}
+            {modalDeleteOpen &&
+                <div className="deleteModalOpen_bg" >
+                    <div className="deleteModalOpen">
+                        <div className="deleteModalOpen_texts">
+                            <h3>Delete picture</h3>
+                            <p>¿Are you sure to delete this picture?</p>
+                        </div>
+                        <div className="buttons">
+                            <button
+                                type="button"
+                                onClick={eliminateItem}
+                            >
+                                Confirm
+                            </button>
+
+                            <button
+                                type="button"
+                                onClick={() => setModalDeleteOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            }
         </div>
     )
 }

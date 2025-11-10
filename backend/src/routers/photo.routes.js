@@ -38,6 +38,10 @@ const upload = multer({ dest: "uploads/" });
  *                 type: string
  *                 format: binary
  *                 description: Image you want to upload.
+ *               title:
+ *                 type: string
+ *                 example: "The best weekend ever"
+ *                 description: title of the immage.
  *               comment:
  *                 type: string
  *                 example: "Updated profile picture."
@@ -61,6 +65,12 @@ const upload = multer({ dest: "uploads/" });
  *                 userId:
  *                   type: string
  *                   example: "6718ab23e8a72b9c1d56a4e2"
+ *                 author:
+ *                   type: string
+ *                   example: "Marcia Morel"
+ *                 title:
+ *                   type: string
+ *                   example: "Happy day"
  *                 comment:
  *                   type: string
  *                   example: "Updated profile picture."
@@ -94,6 +104,8 @@ router.post("/upload", authMiddleware, upload.single("image"), async (req, res) 
 
         const newPhoto = await Photo.create({
             userId: req.user.id,
+            author: req.user.name,
+            title: req.body.title,
             comment: req.body.comment,
             imageUrl: result.secure_url,
             publicId: result.public_id,
@@ -281,18 +293,18 @@ router.get("/public", async (req, res) => {
  */
 
 //get all photos without user
-router.get("/no-user" , async (req, res)=> {
+router.get("/no-user", async (req, res) => {
     try {
-         const photos = await Photo.find().populate("userId", "name").lean()
+        const photos = await Photo.find().populate("userId", "name").lean()
 
 
-        const photosWithOurUsers = photos.filter( photo => photo.userId === null )
+        const photosWithOurUsers = photos.filter(photo => photo.userId === null)
 
-        if(photosWithOurUsers.length == 0) res.status(404).json({ message:'Not faund'})
+        if (photosWithOurUsers.length == 0) res.status(404).json({ message: 'Not faund' })
         res.json(photosWithOurUsers)
-        
+
     } catch (error) {
-        res.status(500).json({ message:'internal server error'})
+        res.status(500).json({ message: 'internal server error' })
     }
 })
 

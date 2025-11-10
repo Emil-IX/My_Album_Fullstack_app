@@ -4,11 +4,20 @@ import mongoose from "mongoose"
 const photoSchema = new mongoose.Schema({
 
     userId: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User",                         
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
 
+    author: {
+        type: String,
+        required: true,
+    },
+
+    title: {
+        type: String,
+        required: true,
+    },
     comment: {
         type: String,
         required: true,
