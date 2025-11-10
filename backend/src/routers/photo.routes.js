@@ -235,7 +235,7 @@ router.get("/public", async (req, res) => {
 
 /**
  * @swagger
- * /photos/notUser:
+ * /photos/no-user:
  *   get:
  *     summary: Get all photos without user
  *     description: 
@@ -257,18 +257,11 @@ router.get("/public", async (req, res) => {
  *                     type: string
  *                     example: "6718ab23e8a72b9c1d56a4e3"
  *                   userId:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         example: "6718ab23e8a72b9c1d56a4e2"
- *                       email:
- *                         type: string
- *                         example: "user@example.com"
- *                     description: Information about the user who owns the photo.
+ *                     type: null
+ *                     example: null
  *                   comment:
  *                     type: string
- *                     example: "Sunset on the beach 🌅"
+ *                     example: "Sunset on the beach"
  *                   imageUrl:
  *                     type: string
  *                     example: "https://res.cloudinary.com/demo/image/upload/v1234567/user_photos/image.jpg"
@@ -288,7 +281,7 @@ router.get("/public", async (req, res) => {
  */
 
 //get all photos without user
-router.get("/notUser" , async (req, res)=> {
+router.get("/no-user" , async (req, res)=> {
     try {
          const photos = await Photo.find().populate("userId", "name").lean()
 
