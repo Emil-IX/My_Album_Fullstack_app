@@ -46,7 +46,7 @@ const upload = multer({ dest: "uploads/" });
  *                 type: string
  *                 enum: ["true", "false"]
  *                 example: "true"
- *                 description:Define whether the image will be public or private.
+ *                 description: Define whether the image will be public or private.
  *     responses:
  *       201:
  *         description: Image uploaded and registered successfully.
@@ -232,6 +232,78 @@ router.get("/public", async (req, res) => {
     }
 })
 
+
+/**
+ * @swagger
+ * /photos/notUser:
+ *   get:
+ *     summary: Get all photos without user
+ *     description: 
+ *       This endpoint returns all photos that have been marked as public by users that do not exist.
+ *        Each photo includes basic information about the user who posted it (email only).
+ *     tags:
+ *       - Photos
+ *     responses:
+ *       200:
+ *         description: List of all available public photos without users.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     example: "6718ab23e8a72b9c1d56a4e3"
+ *                   userId:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: "6718ab23e8a72b9c1d56a4e2"
+ *                       email:
+ *                         type: string
+ *                         example: "user@example.com"
+ *                     description: Information about the user who owns the photo.
+ *                   comment:
+ *                     type: string
+ *                     example: "Sunset on the beach 🌅"
+ *                   imageUrl:
+ *                     type: string
+ *                     example: "https://res.cloudinary.com/demo/image/upload/v1234567/user_photos/image.jpg"
+ *                   publicId:
+ *                     type: string
+ *                     example: "user_photos/abc123xyz"
+ *                   isPublic:
+ *                     type: boolean
+ *                     example: true
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *       404:
+ *         description: Not Faund
+ *       500:
+ *         description: Internal Server Error
+ */
+
+//get all photos without user
+router.get("/notUser" , async (req, res)=> {
+    try {
+         const photos = await Photo.find().populate("userId", "name").lean()
+
+
+        const photosWithOurUsers = photos.filter( photo => photo.userId === null )
+
+        if(photosWithOurUsers.length == 0) res.status(404).json({ message:'Not faund'})
+        res.json(photosWithOurUsers)
+        
+    } catch (error) {
+        res.status(500).json({ message:'internal server error'})
+    }
+})
+
+
 /**
  * @swagger
  * /photos/{id}/toggle:
@@ -290,7 +362,6 @@ router.get("/public", async (req, res) => {
  *       500:
  *         description: Internal Server Error.
  */
-
 
 //change visibility photo
 router.patch("/:id/toggle", authMiddleware, async (req, res) => {
