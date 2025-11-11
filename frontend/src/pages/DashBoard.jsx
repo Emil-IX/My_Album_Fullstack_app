@@ -49,10 +49,10 @@ const Dashboard = () => {
   return (
     <div>
       <div className=" bigContainer mt-7 p-6 bg-white  rounded shadow-md">
-        <div>
+        <div className="welcome">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <p className="mt-2">Welcome {user?.name}</p>
-          <p>Role: {user?.role}</p>
+          <p className="welcome-w  mt-2">Welcome, <span>{user?.name}</span></p>
+          <p className="welcome-r">Role: <span> {user?.role}</span></p>
         </div>
 
        <div  className="stadisNumber">

@@ -217,6 +217,20 @@
 
 /* dashboard */
 
+.welcome-r {
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+
+.welcome-r span {
+  background-color: rgb(12, 176, 39);
+  border-radius: 5px;
+  padding: 1px 5px;
+  color: white;
+
+}
+
 .bigContainer {
   display: flex;
  justify-content: space-between;
@@ -228,6 +242,7 @@
   padding: 10px;
   background-color: white;
   gap: 4em ;
+  border-radius: 5px;
 }
 
 .usersPhotos {
