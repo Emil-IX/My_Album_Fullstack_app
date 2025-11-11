@@ -213,3 +213,127 @@
 .alertUploaded_texts p {
   margin-top: 10px;
 }
+
+
+/* dashboard */
+
+.bigContainer {
+  display: flex;
+ justify-content: space-between;
+}
+
+.usersPhotos--container {
+  display: flex;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: white;
+  gap: 4em ;
+}
+
+.usersPhotos {
+  display: flex;
+  gap: 2em;
+}
+
+.usersPhotos--texts {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  gap: 15px;
+}
+
+
+.usersPhotos--texts h3 {
+  color: rgb(60, 125, 255);
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.usersPhotos--texts :nth-child(2) {
+font-weight: 600;
+}
+
+.usersPhotos--texts :nth-child(4) {
+  font-weight: 600;
+  color: rgb(248, 176, 41);
+  font-style: italic;
+}
+
+.usersPhotos--img img {
+
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+
+}
+
+.usersPhotos :nth-child(3) {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.usersPhotos--texts--numbers :nth-child(1) {
+font-size: 16px;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+.stadisNumber {
+  display: flex;
+  gap: 1.5em;
+}
+
+.usersPhotos--texts--numbers :nth-child(2) {
+  margin-top: 5px;
+  background-color: rgba(244, 169, 7, 0.818);
+  width: 10px;
+  padding: 20px 50px;
+  color: white;
+  font-size: 25px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.usersPhotos--texts--numbers .yourpictures {
+  background-color: rgba(47, 109, 255, 0.892);
+}
+
+
+
+/* userphotos little */
+
+.usersPhotos--container_litle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.usersPhotos_litle {
+  display: flex;
+  gap: 1em;
+}
+
+.usersPhotos_litle-img img {
+  width: 200px;
+  height: 130px;
+  object-fit: cover;
+  background-size: cover;
+}
+
+.usersPhotos--texts_little {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  width: 350px;
+  font-size: 11px;
+}
+
+.usersPhotos--texts_little :nth-child(1){
+  color: rgb(236, 64, 236);
+  font-weight: 700;
+}
+.usersPhotos--texts_little :nth-child(3){
+  font-weight: 700;
+  color: rgb(128, 128, 128);
+}
