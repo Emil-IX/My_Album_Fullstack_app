@@ -1,12 +1,7 @@
 # My Album Fullstack App 
 
-A full-stack application for sharing photos with the added feature of commenting on them.
+My Album Fullstack App is a dynamic, user-friendly platform built to allow users to upload their favorite photos and engage with the community by leaving comments. This project is a **full-stack** application, demonstrating a cohesive architecture from the database to the user interface.
 
-## Overview
-
-PhotoShare is a dynamic, user-friendly platform built to allow users to upload their favorite photos and engage with the community by leaving comments. This project is a **full-stack** application, demonstrating a cohesive architecture from the database to the user interface.
-
-### Key Features
 * **Photo Upload:** Seamlessly upload and display images.
 * **Commenting System:** Interact with photos by leaving comments.
 * **Full-Stack Architecture:** Separate front-end, back-end, and database components.
