@@ -122,3 +122,22 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(AuthContext);
 
+
+### Front env.local
+
+VITE_API_URL=http://localhost:3000/api
+
+### Backend env
+
+MONGO_URI=
+JWT_SECRET=
+FIRST_ADMIN_PASSWORD=
+EMAIL_USER=
+EMAIL_PASS=
+
+
+### Cloudinary
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
